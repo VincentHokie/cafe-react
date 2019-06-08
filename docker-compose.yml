@@ -1,0 +1,30 @@
+version: '3'
+services:
+  mysql:
+    container_name: mysql
+    image: mysql:5.7.21
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: rebase
+  back-end:
+    container_name: rebase-back
+    build: 
+      dockerfile: Dockerfile
+      context: ./back-end
+    depends_on:
+      - mysql
+    links:
+      - mysql
+  front-end:
+    container_name: rebase-front
+    build: 
+      dockerfile: Dockerfile
+      context: ./front-end
+    ports:
+      - "8080:8080"
+    depends_on:
+      - back-end
+    expose:
+      - "8080"
+    links:
+      - back-end
