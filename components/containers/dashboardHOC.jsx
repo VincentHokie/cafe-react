@@ -1,11 +1,10 @@
 import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
+import Columns from 'react-bulma-components/lib/components/columns';
 import Header from '../miscellaneous/header.jsx';
-import SideBar from '../miscellaneous/sidebar.jsx';
 import Base from './base.jsx';
 import ErrorPage from '../miscellaneous/error.jsx';
-
 
 function DashboardWrapper(Component, passedActions, passedState) {
   class BaseFilter extends Base {
@@ -13,20 +12,16 @@ function DashboardWrapper(Component, passedActions, passedState) {
       return (
         <div>
           <Header />
-          <div className="columns">
-            <div className="column is-half-mobile is-two-thirds-tablet is-three-quarters-desktop is-four-fifths-widescreen is-four-fifths-fullhd">
-              <div className="column is-fullwidth">
-                { Component ? <Component {...this.props} /> : ''}
-                {
-                  this.props.errorCode ?
-                    <ErrorPage
-                      errorStatus={this.props.errorCode}
-                      errorMessage={this.props.errorMessage}
-                      userMessage={this.props.userMessage}
-                    /> : ''}
-              </div>
-            </div>
-          </div>
+          <Columns>
+            { Component ? <Component {...this.props} /> : ''}
+            {
+              this.props.errorCode ?
+                <ErrorPage
+                  errorStatus={this.props.errorCode}
+                  errorMessage={this.props.errorMessage}
+                  userMessage={this.props.userMessage}
+                /> : ''}
+          </Columns>
         </div>
       );
     }
@@ -37,9 +32,9 @@ function DashboardWrapper(Component, passedActions, passedState) {
   }, dispatch);
 
   const mapStateToProps = state => ({
-    errorMessage: state.errorReducer.errorMessage,
-    errorCode: state.errorReducer.errorCode,
-    userMessage: state.errorReducer.userMessage,
+    // errorMessage: state.errorReducer.errorMessage,
+    // errorCode: state.errorReducer.errorCode,
+    // userMessage: state.errorReducer.userMessage,
     ...passedState(state),
   });
 
