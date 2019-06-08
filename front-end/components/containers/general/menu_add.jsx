@@ -7,6 +7,7 @@ import {
   Select,
 } from 'react-bulma-components/lib/components/form';
 import Button from 'react-bulma-components/lib/components/button';
+import Icon from 'react-bulma-components/lib/components/icon';
 
 import Base from '../base.jsx';
 import DashboardWrapper from '../dashboardHOC.jsx';
@@ -15,18 +16,19 @@ class MenuAdd extends Base {
 
   render() {
     return (
+      <div style={{ width: '80%', marginLeft: '10%' }}>
       <Columns>
-        <Columns.Column size={5}>
+        <Columns.Column size={7}>
 
           <div style={{ padding: '70px 0' }}>
 
             <h1 className="title">Add Menu Item</h1>
 
-            <Field className="is-horizontal">
+            <Field kind='addons' horizontal>
               <Field.Label>Type</Field.Label>
               <Field.Body>
-                <Control>
-                  <Select>
+                <Control fullwidth>
+                  <Select fullwidth>
                     <option>Side</option>
                     <option>Main Course</option>
                   </Select>
@@ -34,16 +36,16 @@ class MenuAdd extends Base {
               </Field.Body>
             </Field>
 
-            <Field className="is-horizontal">
+            <Field kind='addons' horizontal>
               <Field.Label>Name</Field.Label>
               <Field.Body>
-                <Control>
+                <Control fullwidth>
                   <Input placeholder="" />
                 </Control>
               </Field.Body>
             </Field>
 
-            <Field className="is-horizontal">
+            <Field kind='addons' horizontal>
               <Field.Label>Price</Field.Label>
               <Field.Body>
                 <Control className="has-icons-left">
@@ -55,10 +57,10 @@ class MenuAdd extends Base {
               </Field.Body>
             </Field>
 
-            <Field className="is-horizontal">
+            <Field kind='addons' horizontal>
               <Field.Label>Photo</Field.Label>
               <Field.Body>
-                <Control>
+                <Control fullwidth>
                   <div className="file is-info has-name">
                     <input className="file-input" type="file" name="resume" />
                     <span className="file-cta">
@@ -72,9 +74,9 @@ class MenuAdd extends Base {
 
             </Field>
 
-            <Field>
+            <Field kind='addons'>
               <Field.Body>
-                <Control>
+                <Control fullwidth>
                   <Button type="primary">Submit</Button>
                 </Control>
               </Field.Body>
@@ -84,6 +86,7 @@ class MenuAdd extends Base {
 
         </Columns.Column>
       </Columns>
+      </div>
     );
   }
 }
