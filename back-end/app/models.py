@@ -1,7 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import func
-
-from passlib.apps import custom_app_context as pwd_context
 
 db = SQLAlchemy()
 
@@ -51,6 +48,7 @@ class Menu(db.Model):
 
     def __repr__(self):
         return '<Menu Item Name %r>' % self.name
+
 
 class Type(db.Model):
     """This class represents the Type table."""

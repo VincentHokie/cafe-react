@@ -1,17 +1,11 @@
 import sys
 from pathlib import Path
-from flask import render_template, request, jsonify, session
-from app import app, auth
-from flask_mail import Message
+from flask import jsonify, session
+from app import app
 from sqlalchemy import exc
-from werkzeug.exceptions import HTTPException
-from functools import wraps
 
 from app.models import db, Menu, Type
 from app.forms import MenuForm, TypeForm
-
-from itsdangerous import (TimedJSONWebSignatureSerializer
-                          as Serializer, BadSignature, SignatureExpired)
 
 FILE = Path(__file__).resolve()
 PARENT, ROOT = FILE.parent, FILE.parents[1]
@@ -37,36 +31,6 @@ def check_valid_list_id(list_id):
         return response
 
     return None
-
-
-def check_valid_item_id(item_id):
-    try:
-        int(item_id)
-    except:
-        response = jsonify(
-            {
-                "error":
-                    "Shopping list item id: " + str(item_id) +
-                    " is not a valid id!"
-            })
-        response.status_code = 422
-        return response
-
-    return None
-
-
-def check_list_exists(the_list, list_id):
-
-    if the_list is None:
-        response = jsonify(
-            {
-                "error":
-                    "Shopping list with id: " + str(list_id) + " is not found!"
-            })
-        response.status_code = 404
-        return response
-
-    return the_list
 
 
 def check_item_exists(the_item, item_id):
@@ -103,28 +67,28 @@ def apply_cross_origin_header(response):
 @app.route("/v1/menu", methods=['POST'])
 def add_to_menu():
 
-    form = ShoppingListForm()
+    form = MenuForm()
 
     # the form was properly filled
     if form.validate_on_submit():
 
         # create the list
-        list = ShoppingList(form.name.data, session["user"])
+        menu = Menu(form.name.data, session["user"])
 
         try:
-            list.save()
+            menu.save()
 
             # retrieve the list and send it back to the user
-            list = ShoppingList.query.filter_by(
+            menu = Menu.query.filter_by(
                 name=form.name.data, user_id=session["user"]).first()
-            response = jsonify(list.serialize)
+            response = jsonify(menu.serialize)
             response.status_code = 201
 
         except exc.IntegrityError:
             response = jsonify(
                 {
                     "error":
-                    "The list : '" + form.name.data +
+                    "The menu : '" + form.name.data +
                     "' already exists, please change the name"
                 })
             response.status_code = 406
@@ -141,22 +105,10 @@ def add_to_menu():
 @app.route("/v1/menu", methods=['GET'])
 def get_menu_list():
 
-    # ensure our list actually exists
-    lists = check_list_exists(ShoppingList.query.filter_by(
-        list_id=id, user_id=session["user"]).first(), id)
-    if not isinstance(lists, ShoppingList):
-        return lists
+    # retrieve and send back the needed information
+    response = jsonify([
+        i.serialize for i in Menu.get_all()
+    ])
 
-    # we want all the items under the list with the given id
-    if request.method == "GET":
-
-        # retrieve and send back the needed information
-        response = jsonify([
-            i.serialize for i in ShoppingListItem.get_all(
-                id, request.args.get("q"),
-                request.args.get("limit"),
-                request.args.get("page"))
-                                ])
-
-        response.status_code = 200
-        return response
+    response.status_code = 200
+    return response
