@@ -1,0 +1,7 @@
+.vscode/
+
+venv/
+
+# migration files
+migrations/
+share/
