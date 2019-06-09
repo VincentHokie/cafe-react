@@ -9,7 +9,7 @@ class MenuForm(FlaskForm):
     type = IntegerField('type', validators=[DataRequired()])
     name = StringField('name', validators=[DataRequired()])
     price = IntegerField('price', validators=[DataRequired()])
-    photo = StringField('photo', validators=[DataRequired()])
+    photo = StringField('photo')
 
 
 class TypeForm(FlaskForm):

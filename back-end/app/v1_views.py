@@ -18,36 +18,6 @@ except ValueError:  # Already removed
     pass
 
 
-def check_valid_list_id(list_id):
-    try:
-        int(list_id)
-    except:
-        response = jsonify(
-            {
-                "error":
-                    "Shopping list id: " + str(list_id) + " is not a valid id!"
-            })
-        response.status_code = 422
-        return response
-
-    return None
-
-
-def check_item_exists(the_item, item_id):
-
-    if the_item is None:
-        response = jsonify(
-            {
-                "error":
-                    "Shopping list item with id: " + str(item_id) +
-                    " not found!"
-            })
-        response.status_code = 404
-        return response
-
-    return the_item
-
-
 # decorator used to allow cross origin requests
 @app.after_request
 def apply_cross_origin_header(response):
