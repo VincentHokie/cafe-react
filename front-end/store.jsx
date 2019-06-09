@@ -1,10 +1,10 @@
 /* eslint-disable no-underscore-dangle */
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
-import storeReducer from './reducers/store';
+import menuReducer from './reducers/menu.jsx';
 
 const reducer = combineReducers({
-  storeReducer,
+  menuReducer,
 });
 
 const store = createStore(

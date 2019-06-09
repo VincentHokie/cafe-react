@@ -1,0 +1,7 @@
+const MENU_RETRIEVED = 'MENU_RETRIEVED';
+const MENU_ADDED = 'MENU_ADDED';
+
+module.exports = {
+  MENU_RETRIEVED,
+  MENU_ADDED,
+};
