@@ -15,7 +15,7 @@ class Menu(db.Model):
     type_id = db.Column(db.Integer, db.ForeignKey(
         'type.type_id', ondelete='CASCADE'), nullable=False)
     __table_args__ = (db.UniqueConstraint(
-        'menu_id', 'type_id', name='_type_menu_unique_column'),)
+        'name', 'type_id', name='_type_menu_unique_column'),)
 
     def __init__(self, name, price, photo, type_id):
         self.name = name
@@ -58,7 +58,7 @@ class Type(db.Model):
     type_id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(140), nullable=False)
     __table_args__ = (db.UniqueConstraint(
-        'type_id', name='_type_unique_column'),)
+        'name', name='_type_name_unique_column'),)
 
     def __init__(self, name):
         self.name = name
@@ -71,7 +71,7 @@ class Type(db.Model):
     def serialize(self):
         """Return object data in easily serializeable format"""
         return {
-            'type_id': self.menu_id,
+            'type_id': self.type_id,
             'name': self.name
         }
 
