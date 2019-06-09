@@ -11,8 +11,7 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 app.config["DEBUG"] = True
 app.config["CSRF_ENABLED"] = True
 
-app.config["SQLALCHEMY_DATABASE_URI"] = \
-        os.environ['HEROKU_POSTGRESQL_CRIMSON_URL']
+app.config["SQLALCHEMY_DATABASE_URI"] = os.environ['DB_URI']
 
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
