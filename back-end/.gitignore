@@ -5,3 +5,5 @@ venv/
 # migration files
 migrations/
 share/
+
+**/__pycache__/

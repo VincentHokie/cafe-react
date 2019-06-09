@@ -16,6 +16,8 @@ class Menu(db.Model):
         'type.type_id', ondelete='CASCADE'), nullable=False)
     __table_args__ = (db.UniqueConstraint(
         'name', 'type_id', name='_type_menu_unique_column'),)
+    
+    type = db.relationship('Type', backref='menu', lazy=True)
 
     def __init__(self, name, price, photo, type_id):
         self.name = name
@@ -35,7 +37,7 @@ class Menu(db.Model):
             'name': self.name,
             'price': self.price,
             'photo': self.photo,
-            'type_id': self.type_id,
+            'type_id': self.type.name,
         }
 
     @staticmethod
